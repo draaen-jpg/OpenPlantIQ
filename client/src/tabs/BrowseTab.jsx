@@ -12,7 +12,7 @@ function BrowseTab({ onSelectPlant, onAddToList }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('All');
   const [selectedRegion, setSelectedRegion] = useState('All');
-  const [stats, setStats] = useState({ total: 0, zones: [] });
+  const [stats, setStats] = useState({ total: 0, byType: [], byZone: [], byRegion: [] });
 
   useEffect(() => {
     fetchStats();
@@ -156,7 +156,7 @@ function BrowseTab({ onSelectPlant, onAddToList }) {
     <div className="h-full flex flex-col bg-plant-bg overflow-hidden">
       <div className="bg-plant-card border-b border-plant-border p-4">
         <h1 className="text-xl font-bold text-plant-text mb-1">Open Plant IQ</h1>
-        <p className="text-xs text-plant-muted">{stats.total} plants • Zones {stats.zones.length ? `${stats.zones[0]}-${stats.zones[stats.zones.length - 1]}` : ''}</p>
+        <p className="text-xs text-plant-muted">{stats.total || plants.length} plants • {stats.byZone?.length ? `Zones ${stats.byZone[0].hardiness_zone}–${stats.byZone[stats.byZone.length - 1].hardiness_zone}` : ''}</p>
       </div>
 
       <div className="p-4 border-b border-plant-border space-y-3">
