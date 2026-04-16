@@ -1,0 +1,20 @@
+{
+  "name": "open-plant-iq",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cd client && npm install --include=dev && npx vite build",
+    "vercel-build": "cd client && npm install --include=dev && npx vite build"
+  },
+  "dependencies": {
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "csv-parse": "^6.2.1",
+    "express": "^4.22.1",
+    "mammoth": "^1.12.0",
+    "multer": "^2.1.1",
+    "pdf-parse": "^2.4.5",
+    "pg": "^8.20.0",
+    "xlsx": "^0.18.5"
+  }
+}
