@@ -282,11 +282,7 @@ async function extractFromWord(buffer) {
     .map(line => line.split(/\t|\|/).map(s => s.trim()).filter(Boolean));
 }
 
-async function extractFromPDF(buffer) {
-  const data = await getPdfParse()(buffer);
-  return data.text.split(/\n/).map(l => l.trim()).filter(Boolean)
-    .map(line => line.split(/\t|\|/).map(s => s.trim()).filter(Boolean));
-}
+// PDF import removed – pdf-parse is incompatible with Vercel serverless
 function detectColumns(rows) {
   if (!rows.length) return { headerRow: -1, columns: {} };
   const headerKeywords = {
@@ -356,7 +352,7 @@ app.post('/api/import/parse', upload.single('file'), async (req, res) => {
     if (['xlsx','xls'].includes(ext)) rows = extractFromExcel(buffer);
     else if (['csv','tsv'].includes(ext)) rows = extractFromCSV(buffer);
     else if (ext === 'docx') rows = await extractFromWord(buffer);
-    else if (ext === 'pdf') rows = await extractFromPDF(buffer);
+    else if (ext === 'pdf') return res.status(400).json({ error: 'PDF import is not supported yet. Please convert your PDF to Excel (.xlsx) or CSV first.' });
     else return res.status(400).json({ error: `Unsupported: .${ext}` });
     if (!rows?.length) return res.status(400).json({ error: 'No data found in file' });
     const { headerRow, columns } = detectColumns(rows);
